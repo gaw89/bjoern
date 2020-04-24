@@ -1,6 +1,7 @@
 import os
 import glob
 from setuptools import setup, Extension
+from pathlib import Path
 
 WANT_SIGINT_HANDLING = os.environ.get('BJOERN_WANT_SIGINT_HANDLING', True)
 WANT_SIGNAL_HANDLING = os.environ.get('BJOERN_WANT_SIGNAL_HANDLING', True)
@@ -18,9 +19,9 @@ if WANT_STATSD:
     if WANT_STATSD_TAGS:
         compile_flags.append(('WANT_STATSD_TAGS', 'yes'))
 
-SOURCE_FILES = [os.path.join('http-parser', 'http_parser.c')] + \
-               [os.path.join('statsd-c-client', 'statsd-client.c')] + \
-               sorted(glob.glob(os.path.join('bjoern', '*.c')))
+SOURCE_FILES = [Path('http-parser/http_parser.c')] + \
+               [Path('statsd-c-client/statsd-client.c')] + \
+               sorted(glob.glob(Path('bjoern/*.c')))
 
 if not WANT_STATSD:
     SOURCE_FILES.remove('statsd-c-client/statsd-client.c')
